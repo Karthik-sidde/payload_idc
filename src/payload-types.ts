@@ -69,6 +69,9 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    events: Event;
+    speakers: Speaker;
+    venues: Venue;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +81,9 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    speakers: SpeakersSelect<false> | SpeakersSelect<true>;
+    venues: VenuesSelect<false> | VenuesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -86,6 +92,7 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale: null;
   globals: {};
   globalsSelect: {};
   locale: null;
@@ -159,6 +166,201 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Manage events for your platform
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  /**
+   * Event title
+   */
+  title: string;
+  /**
+   * URL-friendly identifier
+   */
+  slug?: string | null;
+  /**
+   * Detailed event description
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Event start date
+   */
+  startDate: string;
+  /**
+   * Event end date
+   */
+  endDate?: string | null;
+  /**
+   * Start time (HH:MM format)
+   */
+  startTime?: string | null;
+  /**
+   * End time (HH:MM format)
+   */
+  endTime?: string | null;
+  /**
+   * Select event venue
+   */
+  venue?: (string | null) | Venue;
+  /**
+   * Add speakers for this event
+   */
+  speakers?: (string | Speaker)[] | null;
+  /**
+   * Maximum attendees
+   */
+  capacity?: number | null;
+  /**
+   * Auto-tracked registration count
+   */
+  registeredCount?: number | null;
+  /**
+   * Featured image for event
+   */
+  featuredImage?: (string | null) | Media;
+  status?: ('draft' | 'published' | 'cancelled' | 'completed') | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage event venues
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venues".
+ */
+export interface Venue {
+  id: string;
+  /**
+   * Venue name
+   */
+  name: string;
+  /**
+   * Full street address
+   */
+  address?: string | null;
+  /**
+   * City
+   */
+  city?: string | null;
+  /**
+   * State/Province
+   */
+  state?: string | null;
+  /**
+   * Country
+   */
+  country?: string | null;
+  /**
+   * Postal/ZIP code
+   */
+  zipCode?: string | null;
+  /**
+   * Venue capacity
+   */
+  capacity?: number | null;
+  /**
+   * Google Maps or similar URL
+   */
+  mapLink?: string | null;
+  /**
+   * Venue photo
+   */
+  image?: (string | null) | Media;
+  /**
+   * e.g., "WiFi", "Parking", "Catering"
+   */
+  amenities?:
+    | {
+        amenity?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage event speakers
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speakers".
+ */
+export interface Speaker {
+  id: string;
+  /**
+   * Full name of the speaker
+   */
+  name: string;
+  /**
+   * Contact email
+   */
+  email?: string | null;
+  /**
+   * Speaker biography
+   */
+  bio?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Speaker profile photo
+   */
+  photo?: (string | null) | Media;
+  /**
+   * Job title or role (e.g., "Principal Engineer")
+   */
+  role?: string | null;
+  /**
+   * Organization name
+   */
+  company?: string | null;
+  /**
+   * Social media links
+   */
+  social?:
+    | {
+        platform?: ('twitter' | 'linkedin' | 'github' | 'website') | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -189,6 +391,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'speakers';
+        value: string | Speaker;
+      } | null)
+    | ({
+        relationTo: 'venues';
+        value: string | Venue;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -271,6 +485,77 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  startDate?: T;
+  endDate?: T;
+  startTime?: T;
+  endTime?: T;
+  venue?: T;
+  speakers?: T;
+  capacity?: T;
+  registeredCount?: T;
+  featuredImage?: T;
+  status?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speakers_select".
+ */
+export interface SpeakersSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  bio?: T;
+  photo?: T;
+  role?: T;
+  company?: T;
+  social?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venues_select".
+ */
+export interface VenuesSelect<T extends boolean = true> {
+  name?: T;
+  address?: T;
+  city?: T;
+  state?: T;
+  country?: T;
+  zipCode?: T;
+  capacity?: T;
+  mapLink?: T;
+  image?: T;
+  amenities?:
+    | T
+    | {
+        amenity?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

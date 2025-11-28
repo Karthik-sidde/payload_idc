@@ -1,0 +1,27 @@
+/* Custom Payload Admin Panel Styling */
+
+/* Override the Payload heading with IDC Platform */
+.admin-view_header__heading,
+[class*="heading"],
+h1 {
+  font-family: inherit;
+}
+
+/* Change Payload branding text */
+.auth-view__brand,
+.brand,
+[class*="brand"] {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* Override any Payload-specific text */
+.admin {
+  --brand-color: #22c55e;
+}
+
+/* Green theme for IDC */
+:root {
+  --color-primary: #22c55e;
+  --color-accent: #16a34a;
+}
