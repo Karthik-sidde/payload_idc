@@ -19,8 +19,8 @@ PAYLOAD_SECRET=2184963ae1c6f5dff9c3ac29
 
 ```bash
 cd idc
-pnpm install
-pnpm run dev
+npm install
+npm run dev
 ```
 
 The server will start on:
@@ -66,7 +66,7 @@ git clone <your-repo>
 cd idc
 
 # 2. Install dependencies
-pnpm install
+npm install
 
 # 3. Set environment variables
 export DATABASE_URI="mongodb+srv://..."
@@ -74,10 +74,10 @@ export PAYLOAD_SECRET="your-secret-key"
 export NODE_ENV="production"
 
 # 4. Build for production
-pnpm run build
+npm run build
 
 # 5. Start server
-pnpm run start
+npm start
 ```
 
 **Using PM2 (Process Manager):**
@@ -89,7 +89,7 @@ cat > ecosystem.config.js << 'EOF'
 module.exports = {
   apps: [{
     name: 'payload-cms',
-    script: 'pnpm',
+    script: 'npm',
     args: 'start',
     env: {
       NODE_ENV: 'production',
@@ -222,7 +222,7 @@ csrf: [
 
 Then regenerate import map:
 ```bash
-pnpm run generate:importmap
+npm run generate:importmap
 ```
 
 ## Troubleshooting
@@ -248,7 +248,7 @@ lsof -i :3000
 kill -9 <PID>
 
 # Or use different port
-PORT=3001 pnpm run dev
+PORT=3001 npm run dev
 ```
 
 ## Security Best Practices

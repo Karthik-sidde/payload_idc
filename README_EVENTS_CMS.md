@@ -19,7 +19,7 @@ A headless CMS for managing events, speakers, and venues built with **Payload CM
 ### 1. Install Dependencies
 ```bash
 cd idc
-pnpm install
+npm install
 ```
 
 ### 2. Configure Environment
@@ -31,7 +31,7 @@ PAYLOAD_SECRET=your-secret-key
 
 ### 3. Start Development Server
 ```bash
-pnpm run dev
+npm run dev
 ```
 
 The server will start at `http://localhost:3000`:
@@ -125,14 +125,14 @@ const event = await fetch('http://your-cms-url/api/events', {
 ## Available Scripts
 
 ```bash
-pnpm run dev              # Start dev server
-pnpm run build            # Production build
-pnpm run start            # Start production server
-pnpm run generate:types   # Generate TypeScript types from Payload config
-pnpm run generate:importmap
-pnpm run lint             # Run ESLint
-pnpm run test:int         # Integration tests (Vitest)
-pnpm run test:e2e         # E2E tests (Playwright)
+npm run dev              # Start dev server
+npm run build            # Production build
+npm start               # Start production server
+npm run generate:types   # Generate TypeScript types from Payload config
+npm run generate:importmap
+npm run lint             # Run ESLint
+npm run test:int         # Integration tests (Vitest)
+npm run test:e2e         # E2E tests (Playwright)
 ```
 
 ## Deployment

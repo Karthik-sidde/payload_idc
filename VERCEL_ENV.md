@@ -34,3 +34,4 @@ Add these to your Vercel project settings (Settings > Environment Variables):
 - `DATABASE_URI` and `PAYLOAD_SECRET` should be treated as secrets
 - Environment variables are cached in Vercel, so redeploy after changes
 - For MongoDB Atlas, ensure your cluster allows connections from Vercel IPs (use `0.0.0.0/0` or Vercel's IP ranges)
+- This project uses **npm** as the package manager (not pnpm)

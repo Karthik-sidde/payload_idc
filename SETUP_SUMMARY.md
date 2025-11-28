@@ -101,15 +101,15 @@ fetch('http://your-cms-url/api/events', {
 ### 1. Start the CMS Server
 ```bash
 cd /Users/karthiksidde/Desktop/Payload-cms/idc
-pnpm install
-pnpm run dev
+npm install
+npm run dev
 ```
 
 Server runs on `http://localhost:3000`
 
 ### 2. Create Admin User
 ```bash
-pnpm run payload user:create
+npm run payload user:create
 ```
 
 ### 3. Access Admin Panel
