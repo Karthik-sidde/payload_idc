@@ -50,19 +50,21 @@ export default buildConfig({
   },
   collections: [Users, Media, Events, Speakers, Venues],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || 'your-secret-key',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+    url: process.env.DATABASE_URI || 'mongodb://localhost/idc',
   }),
   cors: [
+    process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3000',
     'https://idc-eta.vercel.app',
     'http://localhost:3000',
     'http://localhost:3001',
   ],
   csrf: [
+    process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3000',
     'https://idc-eta.vercel.app',
     'http://localhost:3000',
     'http://localhost:3001',

@@ -2,7 +2,12 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js config here
+  // Vercel optimization
+  swcMinify: true,
+  compress: true,
+  productionBrowserSourceMaps: false,
+
+  // Webpack configuration
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
@@ -11,6 +16,25 @@ const nextConfig = {
     }
 
     return webpackConfig
+  },
+
+  // Environment variables
+  env: {
+    NEXT_PUBLIC_CMS_URL: process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3000',
+  },
+
+  // Image optimization
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
   },
 }
 

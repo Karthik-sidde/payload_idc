@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import './styles.css'
 
 export const metadata: Metadata = {
   description: 'Event management platform admin panel',
