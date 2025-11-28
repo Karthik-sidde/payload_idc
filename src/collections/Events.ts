@@ -72,7 +72,7 @@ export const Events: CollectionConfig = {
     {
       name: 'venue',
       type: 'relationship',
-      relationTo: 'venues' as any,
+      relationTo: 'venues',
       admin: {
         description: 'Select event venue',
       },
@@ -80,7 +80,7 @@ export const Events: CollectionConfig = {
     {
       name: 'speakers',
       type: 'relationship',
-      relationTo: 'speakers' as any,
+      relationTo: 'speakers',
       hasMany: true,
       admin: {
         description: 'Add speakers for this event',
@@ -105,7 +105,7 @@ export const Events: CollectionConfig = {
     {
       name: 'featuredImage',
       type: 'relationship',
-      relationTo: 'media' as any,
+      relationTo: 'media',
       admin: {
         description: 'Featured image for event',
       },
